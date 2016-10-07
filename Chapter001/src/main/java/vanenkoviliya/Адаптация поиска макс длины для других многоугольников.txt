@@ -1,0 +1,17 @@
+﻿
+Можно легко модифицировать метод max() для различного количесва сторон многоугольника. Для этого неоходимо добавить условный оператор if столько раз, сколько сторон у нашего многоугольника. В случае выполнения условия для стороны многоугольника присваивать аргументу Maxlength значение длины стороны.
+
+public class Maxlength
+{
+    public double max(Polygon polygon){
+        double Maxlength;
+        Maxlength=polygon.ab;
+        if (polygon.bc>Maxlength) Maxlength=polygon.bc;
+        if (polygon.сd>Maxlength) Maxlength=polygon.cd;
+   			. . .
+ /* повторить в соответствии с количеством сторон многоугольника */
+   			. . .
+        if (polygon.za>Maxlength) Maxlength=polygon.za;
+        return Math.round(Maxlength*100.0)/100.0;
+    }
+}
