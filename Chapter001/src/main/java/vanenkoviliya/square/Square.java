@@ -7,9 +7,7 @@ package vanenkoviliya.square;
  * */
 public class Square
 {
-
     float a, b, c, x;
-
     /**
      *Присваивание переменным класса значения, переданные в конструктор.
      * @param a первый аргумент
