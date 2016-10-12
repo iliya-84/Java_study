@@ -1,4 +1,4 @@
-package vanenkoviliya.factorial;
+package vanenkoviliya.povorotmassiva;
 
 /**
  * @author vanenkov_ia
@@ -12,7 +12,7 @@ public class Factorial {
      * @param x первый аргумент
      * @return результат вычисления
      */
-    int calculate(int x) {
+   public int calculate(int x) {
         int result = 1;
         for (int a=x;a>0;a--) {
             result = result*a;

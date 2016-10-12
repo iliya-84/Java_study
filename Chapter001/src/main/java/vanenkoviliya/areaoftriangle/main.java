@@ -5,5 +5,5 @@ package vanenkoviliya.areaoftriangle;
  * @version 1
  * @since 11.10.2016
  **/
-public class Triangle {
+public class main {
 }
