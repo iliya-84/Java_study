@@ -1,17 +1,6 @@
-﻿
-Можно легко модифицировать метод max() для различного количества сторон многоугольника. Для этого неоходимо добавить условный оператор if столько раз, сколько сторон у нашего многоугольника. В случае выполнения условия для стороны многоугольника присваивать аргументу Maxlength значение длины стороны.
-
-public class Maxlength
-{
-    public double max(Polygon polygon){
-        double Maxlength;
-        Maxlength=polygon.ab;
-        if (polygon.bc>Maxlength) Maxlength=polygon.bc;
-        if (polygon.сd>Maxlength) Maxlength=polygon.cd;
-   			. . .
- /* повторить в соответствии с количеством сторон многоугольника */
-   			. . .
-        if (polygon.za>Maxlength) Maxlength=polygon.za;
-        return Math.round(Maxlength*100.0)/100.0;
-    }
-}
+﻿Метод max() класса Maxlength подходит для поиска наименьшей длины любых других многоугольников. Благодаря переменному аргументу max(double...sides), не требуется изменять сам метод max(). При его применении необходимо передать в качестве аргументов все стороны интересующего многоугольника.
+        . . .
+        Polygonpolygon =  new Polygon(a,b, . . . z);
+        Maxlength maxlength = new Maxlength();
+        System.out.println(maxlength.max(polygon.ab,polygon.bc, . . . polygon.za)); // Вывод наибольшей длины z - угольника.
+        . . . 
