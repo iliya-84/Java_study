@@ -8,7 +8,6 @@ package vanenkoviliya.areaoftriangle;
 public class Point {
     public double x;
     public double y;
-
     /**
      *Присваивание переменным класса значения, переданные в конструктор.
      * @param x первый аргумент

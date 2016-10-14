@@ -9,14 +9,14 @@ public class Maxlength
 {
     /**
      *Вычисление наибольшей длины стороны треуголольника
-     * @param triangle первый аргумент
-     * @return результат
+     * @param sides переменный аргумент
+     * @return результат, длина наибольшей стороны
      */
-    public double max(Triangle triangle){
-        double Maxlength;
-        Maxlength=triangle.ab;
-        if (triangle.bc>Maxlength) Maxlength=triangle.bc;
-        if (triangle.ac>Maxlength) Maxlength=triangle.ac;
-        return Math.round(Maxlength*100.0)/100.0;
+    public double max(double...sides) {
+        double Maxlength = 0;
+        for (double n : sides) {
+            if (n > Maxlength) Maxlength = n;
+           }
+            return Math.round(Maxlength * 100.0) / 100.0;
     }
 }

@@ -1,8 +1,7 @@
 package vanenkoviliya.dublicat;
 
 import org.junit.Test;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * @author vanenkov_ia
@@ -13,21 +12,13 @@ public class DublicatTest {
 
     @Test
     /**
-     *Проверка удаления дубликатов из массива строк.
+     * Проверка удаления дубликатов из массива строк.  Сравнение полученного масива с правильным.
      */
-    public void whenSortShouldSortirovka() {
-        String[] values = {"aa","aa","bb","cc","cc","bb","dd","ee","bb","ee"};
+    public void whenDeldublShouldUdalenie() {
+        String[] values = {"aa","aa","bb","cc","cc","cc","bb","dd","ee","bb","ee","aa","aa"};
+        String[] testvalues = {"aa","bb","cc","dd","ee", null, null, null, null, null, null, null, null};
         Dublicat dublicat = new Dublicat();
-        dublicat.udalenie(values);
-        assertThat(values[0], is("aa"));
-        assertThat(values[1], is(""));
-        assertThat(values[2], is("bb"));
-        assertThat(values[3], is("cc"));
-        assertThat(values[4], is(""));
-        assertThat(values[5], is(""));
-        assertThat(values[6], is("dd"));
-        assertThat(values[7], is("ee"));
-        assertThat(values[8], is(""));
-        assertThat(values[9], is(""));
+        dublicat.deldubl(values);
+        assertArrayEquals(values,testvalues);
     }
 }

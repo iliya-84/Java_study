@@ -1,4 +1,4 @@
-package vanenkoviliya.povorotmassiva;
+package vanenkoviliya.factorial;
 
 /**
  * @author vanenkov_ia

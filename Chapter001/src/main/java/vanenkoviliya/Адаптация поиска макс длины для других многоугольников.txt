@@ -1,6 +1,6 @@
 ﻿Метод max() класса Maxlength подходит для поиска наименьшей длины любых других многоугольников. Благодаря переменному аргументу max(double...sides), не требуется изменять сам метод max(). При его применении необходимо передать в качестве аргументов все стороны интересующего многоугольника.
         . . .
-        Polygonpolygon =  new Polygon(a,b, . . . z);
+        Polygon polygon =  new Polygon(a,b, . . . z);
         Maxlength maxlength = new Maxlength();
         System.out.println(maxlength.max(polygon.ab,polygon.bc, . . . polygon.za)); // Вывод наибольшей длины z - угольника.
         . . . 

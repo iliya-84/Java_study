@@ -1,16 +1,16 @@
-package vanenkoviliya.sortirovkamassiva;
+package vanenkoviliya.arraysorting;
 
 /**
  * @author vanenkov_ia
  * @version 1
  * @since 05.10.2016
  **/
-public class Sortirovka {
+public class Arraysorting {
     /**
      * Сортировка мссива пузьрьковым методом от меньшего к большему
      * @param array массив для сортировки
      */
-    void sort(int[] array) {
+    void sorting (int[] array) {
         int temporary;
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = 0; j < array.length - i - 1; j++) {
