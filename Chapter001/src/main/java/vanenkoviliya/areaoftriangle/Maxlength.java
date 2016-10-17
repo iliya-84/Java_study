@@ -13,10 +13,10 @@ public class Maxlength
      * @return результат, длина наибольшей стороны
      */
     public double max(double...sides) {
-        double Maxlength = 0;
+        double maxlength = 0;
         for (double n : sides) {
-            if (n > Maxlength) Maxlength = n;
+            if (n > maxlength) maxlength = n;
            }
-            return Math.round(Maxlength * 100.0) / 100.0;
+            return Math.round(maxlength * 100.0) / 100.0;
     }
 }
