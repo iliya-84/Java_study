@@ -1,8 +1,8 @@
 package vanenkoviliya.areaoftriangle;
 
 import org.junit.Test;
-import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 
 public class MaxlengthTest {
     @Test
@@ -15,6 +15,6 @@ public class MaxlengthTest {
         Point c = new Point(3,2);
         Triangle triangle =  new Triangle(a,b,c);
         Maxlength maxlength = new Maxlength();
-        assertThat(maxlength.max(triangle.ab,triangle.bc,triangle.ac), is(3.61d));
+        assertThat(maxlength.max(triangle.ab,triangle.bc,triangle.ac),closeTo(3.61d, 0.01d));
     }
 }

@@ -1,7 +1,8 @@
 package vanenkoviliya.areaoftriangle;
 
 import org.junit.Test;
-import static org.hamcrest.core.Is.is;
+
+import static org.hamcrest.Matchers.closeTo;
 import static org.junit.Assert.*;
 /**
  * @author vanenkov
@@ -15,6 +16,7 @@ public class TriangleTest {
         Point b = new Point(1,4);
         Point c = new Point(3,2);
         Triangle triangle =  new Triangle(a,b,c);
-        assertThat(triangle.area(), is(5d));
+        assertThat(triangle.area(),closeTo(5d, 0.01d));
+
     }
 }

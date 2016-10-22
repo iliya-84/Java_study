@@ -17,6 +17,6 @@ public class Maxlength
         for (double n : sides) {
             if (n > maxlength) maxlength = n;
            }
-            return Math.round(maxlength * 100.0) / 100.0;
+              return maxlength;
     }
 }

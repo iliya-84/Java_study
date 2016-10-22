@@ -29,6 +29,6 @@ public class Triangle {
         if (ab + bc == ac || ab + ac == bc || ac + bc == ab) {
             throw new ArithmeticException("The triangle is impossible");
         }
-        return Math.round(Math.sqrt(p*(p-ab)*(p-bc)*(p-ac))*100)/100;
+        return Math.sqrt(p*(p-ab)*(p-bc)*(p-ac));
     }
 }
