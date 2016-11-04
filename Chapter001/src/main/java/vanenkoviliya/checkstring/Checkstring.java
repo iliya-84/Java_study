@@ -1,4 +1,4 @@
-package main.java.vanenkoviliya.checkstring;
+package vanenkoviliya.checkstring;
 
 /**
  * @author ИЛЬЯ
@@ -6,4 +6,35 @@ package main.java.vanenkoviliya.checkstring;
  * @since 30.10.2016
  */
 public class Checkstring {
+
+    /**
+     * Поиск подстроки в строке
+     *
+     * @param origin строка
+     * @param sub подстрока
+     * @return true если подстрока содержится в строке, false если не содержится
+     */
+    int k;
+
+    boolean contains(String origin, String sub) {
+        char[] arrayorigin = origin.toCharArray();
+        char[] arraysub = sub.toCharArray();
+        for (int i = 0; i < arrayorigin.length; i++) {
+            if (arrayorigin[i] == arraysub[0] && arraysub.length<=arrayorigin.length-i-1) {
+                k = 1;
+                for (int j = 1; j < arraysub.length; j++) {
+                    if (arrayorigin[i + k] == arraysub[j])
+                    {
+                        k=k+1;
+                    }
+                    else
+                    {
+            //            return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 }
