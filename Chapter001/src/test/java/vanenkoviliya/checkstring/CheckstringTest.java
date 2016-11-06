@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  * @author vanenkov_ia
  * @version 1
- * @since 01.11.2016
+ * @since 06.11.2016
  **/
 public class CheckstringTest
 {

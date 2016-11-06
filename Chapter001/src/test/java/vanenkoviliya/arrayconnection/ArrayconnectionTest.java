@@ -1,13 +1,12 @@
 package vanenkoviliya.arrayconnection;
 
 import org.junit.Test;
-import vanenkoviliya.arraysorting.Arraysorting;
 import static org.junit.Assert.assertArrayEquals;
 
 /**
  * @author vanenkov_ia
  * @version 1
- * @since 02.11.2016
+ * @since 06.11.2016
  **/
 public class ArrayconnectionTest {
     @Test
