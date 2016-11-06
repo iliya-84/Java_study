@@ -1,7 +1,6 @@
 package vanenkoviliya.arraysorting;
 
 import org.junit.Test;
-import vanenkoviliya.checkstring.Checkstring;
 import static org.junit.Assert.*;
 
 /**

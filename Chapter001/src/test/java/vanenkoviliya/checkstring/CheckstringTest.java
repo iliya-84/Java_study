@@ -1,8 +1,6 @@
 package vanenkoviliya.checkstring;
 
 import org.junit.Test;
-import vanenkoviliya.factorial.Factorial;
-
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
