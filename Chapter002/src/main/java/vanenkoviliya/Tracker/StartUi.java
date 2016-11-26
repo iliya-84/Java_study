@@ -139,8 +139,6 @@ public class StartUi {
      */
     static boolean containssubstring(String origin, String sub) {
         boolean answer = false;
-        char[] arrayorigin = origin.toCharArray();
-        char[] arraysub = sub.toCharArray();
         if(origin.indexOf(sub) != -1) answer = true;
         else answer = false;
         return answer;
