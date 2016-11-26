@@ -10,89 +10,46 @@ import java.io.*;
  * @since 07.11.2016
  **/
 public class Tracker {
-    List<Application> applications = new ArrayList();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    Application[] applications = new Application[100];
+    int quantity =0;
     /**
      * Добавление заявки.
      */
     void add() throws Exception{
-        applications.add(new Application());
-        System.out.println("*Ведите имя:");
-        applications.get(applications.size()-1).name=reader.readLine();;
-        System.out.println("*Ведите описание:");
-        applications.get(applications.size()-1).description = reader.readLine();
-        System.out.println("*Ведите комментарий:");
-        String comment = reader.readLine();
-        if (comment.equals("")==false)  applications.get(applications.size()-1).comments.add(comment);
+        applications[quantity] = new Application();
+        quantity++;
     }
 
     /**
      * Редактирования заявки.
+     * @param number номер заявки
+     * @param change изменяемое поле
+     * @param value новое значение поля
      */
-    void edit() throws Exception{
-        System.out.println("*Выберите номер заявки для редактирования:");
-        try {
-            int number = Integer.parseInt(reader.readLine()) - 1;
-            applicationprint(number);
-
-        System.out.println("*Для изменения имени нажмите 1 \n*Для изменения описания нажмите 2\n*Для добавления комментария нажмите 3");
-        String change = reader.readLine();
+    void edit(int number, String change, String value) {
         if (change.equals("1")) {
-            System.out.println("*Введите имя:");
-            applications.get(number).name = reader.readLine();
+            applications[number].name = value;
         }
         else if (change.equals("2")) {
-            System.out.println("*Введите описание:");
-            applications.get(number).description = reader.readLine();
+            applications[number].description = value;
         }
         else if (change.equals("3")) {
-            System.out.println("*Введите комментарий");
-                applications.get(number).comments.add(reader.readLine());
-        }
-        else System.out.println("*Неверный ввод");
-
-        }
-        catch (NumberFormatException e) {
-            System.out.println("*Неверный ввод");
-        }
-        catch (IndexOutOfBoundsException e) {
-            System.out.println("*Заявка не существует");
+         applications[number].comments[applications[number].quantityofcomments] = value;
+         applications[number].quantityofcomments++;
         }
     }
     /**
      * Удаления заявки.
      */
-    void delete() throws Exception{
-        System.out.println("*Выберите номер заявки для удаления:");
-        try {
-            int number = Integer.parseInt(reader.readLine())-1;
-            applications.remove(number);
+    void delete(int number) {
+        applications[number]=null;
+          for(int i = number; i < quantity - 1; i++) {
+            Application temporary = new Application();
+            temporary = applications[i];
+            applications[i] = applications[i + 1];
+            applications[i + 1] = temporary;
         }
-        catch (NumberFormatException e) {
-            System.out.println("*Неверный ввод");
-        }
-        catch (IndexOutOfBoundsException e) {
-            System.out.println("*Заявка не существует");
-        }
-      }
-    /**
-     * Отображение списка всех заявок.
-     */
-    void getlist() {
-        for(int i=0;i<applications.size();i++){
-            applicationprint(i);
-          }
-        }
-
-    /**
-     * Вывод в консоль заявки по номеру.
-     * @param i массив для сортировки
-     */
-    void applicationprint(int i) {
-        System.out.println("№" + (i + 1) + " Имя:" + applications.get(i).name + " Дата создания: " + applications.get(i).date + "  Описание: " + applications.get(i).description);
-        for (int j = 0; j < applications.get(i).comments.size(); j++) {
-            if (applications.get(i).comments.get(j).equals("") == false) System.out.println("Комментарий " + (j + 1) + ": " + applications.get(i).comments.get(j));
-        }
+        quantity--;
     }
 }
 
