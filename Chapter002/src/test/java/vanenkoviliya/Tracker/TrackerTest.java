@@ -31,7 +31,7 @@ public class TrackerTest {
         tracker.add();
         tracker.add();
         tracker.add();
-        tracker.delete(0);
+        tracker.delete(tracker.applications[0].getid());
         assertThat(tracker.quantity, is(2));
     }
     @Test
@@ -42,12 +42,12 @@ public class TrackerTest {
         tracker.add();
         tracker.applications[0].name = "name";
         tracker.applications[0].description = "description";
-        tracker.edit(0,"1","newname");
-        tracker.edit(0,"2","newdescription");
-        tracker.edit(0,"3","newcomment");
+        tracker.edit(tracker.applications[0].getid(),"1","newname");
+        tracker.edit(tracker.applications[0].getid(),"2","newdescription");
+        tracker.edit(tracker.applications[0].getid(),"3","newcomment");
         assertThat(tracker.applications[0].name.equals("newname"), is(true));
         assertThat(tracker.applications[0].description.equals("newdescription"), is(true));
-        assertThat(tracker.applications[0].comments[0].equals("newcomment"), is(true));
+        assertThat(tracker.applications[0].comments[0].text.equals("newcomment"), is(true));
     }
 }
 
