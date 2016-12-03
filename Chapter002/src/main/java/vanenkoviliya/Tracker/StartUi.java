@@ -32,20 +32,19 @@ public class StartUi {
                 System.out.println("*Ведите комментарий:");
                 String comment = reader.readLine();
                 if (comment.equals("") == false) {
-                tracker.applications[(tracker.quantity) - 1].comments[0] = comment;
-                tracker.applications[(tracker.quantity) - 1].quantityofcomments++;
+                  tracker.applications[(tracker.quantity) - 1].comments[0]=new Comment();
+                  tracker.applications[(tracker.quantity) - 1].comments[0].text = comment;
+                  tracker.applications[(tracker.quantity) - 1].quantityofcomments++;
+                }
             }
-            }
-
                else if (menu.equals("2")) {
-                System.out.println("*Выберите номер заявки для редактирования:");
-                int number;
+                System.out.println("*Выберите id заявки для редактирования:");
+                int id;
                 String change;
                 String value;
                 try{
-                number = Integer.parseInt(reader.readLine()) - 1;
-                applicationprint(number);
-
+                id = Integer.parseInt(reader.readLine());
+                applicationprint(id);
                 System.out.println("*Для изменения имени нажмите 1 \n*Для изменения описания нажмите 2\n*Для добавления комментария нажмите 3");
                 change = reader.readLine();
                 if (change.equals("1")) {
@@ -61,32 +60,32 @@ public class StartUi {
                     System.out.println("*Неверный ввод");
                     value = null;
                 }
-            if (change.equals(null)==false) tracker.edit(number, change, value);
-
+                    tracker.edit(id, change, value);
             } catch (NumberFormatException e) {
                 System.out.println("*Неверный ввод");
-            } catch (IndexOutOfBoundsException e) {
+            } catch (NullPointerException e) {
                 System.out.println("*Заявка не существует");
             }
         }
             else if (menu.equals("3")) {
-                System.out.println("*Выберите номер заявки для удаления:");
+                System.out.println("*Выберите id заявки для удаления:");
                 try {
-                tracker.delete(Integer.parseInt(reader.readLine()) - 1);
-                      }
+                int deleteid = Integer.parseInt(reader.readLine());
+                tracker.delete(deleteid);
+                System.out.println("Заявка id"+ deleteid + " удалена");
+               }
                 catch (NumberFormatException e) {
                 System.out.println("*Неверный ввод");
             }
-                catch (IndexOutOfBoundsException e) {
+                catch (NullPointerException e) {
                 System.out.println("*Заявка не существует");
             }
-           }
-
+        }
             else if (menu.equals("4")) getlist();
             else if (menu.equals("5")) getlistbyfiltr();
             else if (menu.equals("6")) break;
             else System.out.println("Неверный ввод");
-        }
+      }
     }
 
     /**
@@ -94,7 +93,7 @@ public class StartUi {
      */
     static void getlist() {
         for(int i=0;i<tracker.quantity;i++){
-            applicationprint(i);
+           applicationprint(tracker.applications[i].id);
         }
     }
     /**
@@ -109,36 +108,37 @@ public class StartUi {
             System.out.println("*Введите имя для поиска");
             String searchname = reader.readLine();
             for (int i = 0; i < tracker.quantity; i++) {
-                if (containssubstring(tracker.applications[i].name, searchname) == true) applicationprint(i);
+                if (containssubstring(tracker.applications[i].name, searchname) == true) applicationprint(tracker.applications[i].id);
             }
         }
         else if (read.equals("2")) {
             System.out.println("*Введите описание для поиска");
             String searchdate = reader.readLine();
             for (int i = 0; i < tracker.quantity; i++) {
-                if (containssubstring(tracker.applications[i].name, searchdate)== true) applicationprint(i);
+                if (containssubstring(tracker.applications[i].description, searchdate)== true) applicationprint(tracker.applications[i].id);
                 }
             }
          else System.out.println("*Неверный ввод");
     }
-
     /**
      * Вывод в консоль заявки по номеру.
-     * @param i массив для сортировки
+     * @param id массив для сортировки
      */
-    static void applicationprint(int i) {
-        System.out.println("№" + (i + 1) + " Имя:" + tracker.applications[i].name + " Дата создания: " + tracker.applications[i].date + "  Описание: " + tracker.applications[i].description);
-        for (int j = 0; j < tracker.applications[i].quantityofcomments; j++) {
-            if (tracker.applications[i].comments[j].equals("") == false)
-                System.out.println("Комментарий " + (j + 1) + ": " + tracker.applications[i].comments[j]);
+    static void applicationprint(int id) {
+        System.out.println("id:" + tracker.findById(id).id + " Имя:" +  tracker.findById(id).name + " Дата создания: " +  tracker.findById(id).date + "  Описание: " + tracker.findById(id).description);
+        for (int j = 0; j <  tracker.findById(id).quantityofcomments; j++) {
+            if ( tracker.findById(id).comments[j].equals("") == false)
+                System.out.println("Комментарий " + (j + 1) + ": " +  tracker.findById(id).comments[j].text);
         }
     }
     /**
      * Отображение списка заявок по фильтру. Поиск происходит по содержанию подстроки в строке.
+     * @param origin строка
+     * @param sub подстрока
      * @return true если одстрока в строке содержится, false если не содержится
      */
     static boolean containssubstring(String origin, String sub) {
-        boolean answer = false;
+        boolean answer;
         if(origin.indexOf(sub) != -1) answer = true;
         else answer = false;
         return answer;
