@@ -9,81 +9,81 @@ import java.util.Random;
  **/
 public class Tracker {
     Application[] applications = new Application[100];
-    int quantity =0;
-    Random random = new Random();
+    int quantity =0; // Количество заявок в трекере.
     /**
      * Добавление заявки. Заявке случайным образом присваиваится id. Также происходит проверка на совпадение с уже существующими id.
+     * @param newapplication заявка для добавления.
      */
-    void add() throws Exception{
-        applications[quantity] = new Application();
-        int randomid=0;
-        boolean repeatid = false;
-        while(repeatid == false) {
-          repeatid = true;
-          randomid = random.nextInt(1000);
+    void add(Application newapplication){
+        Random random = new Random();
+        String randomId="0";
+        boolean repeatId = false;
+        applications[quantity]=newapplication;
+        while(repeatId == false) {
+          repeatId = true;
+          randomId = Integer.toString(random.nextInt(1000));
           for(int i=0;i<quantity;i++){
-             if (randomid == applications[i].id) repeatid = false;
+             if (randomId == applications[i].id) repeatId = false;
         }
     }
-        applications[quantity].id = randomid;
+        applications[quantity].id = randomId;
         quantity++;
     }
-
     /**
      * Редактирования заявки.
-     * @param id заявки
-     * @param change изменяемое поле
-     * @param value новое значение поля
+     * @param id заявки.
+     * @param newApplication измененная заявка.
      */
-    void edit(int id, String change, String value) {
-            if (change.equals("1")) {
-                findById(id).name = value;
-            } else if (change.equals("2")) {
-                findById(id).description = value;
-            } else if (change.equals("3")) {
-                findById(id).addcomment(value);
-            }
+    void edit(String id, Application newApplication) {
+        newApplication.id = id;
+        newApplication.comments=applications[getdById(id)].comments;
+        newApplication.quantityOfComments=applications[getdById(id)].quantityOfComments;
+        applications[getdById(id)] = newApplication;
     }
     /**
      * Удаления заявки.
-     * @param id id заявки
+     * @param id id заявки.
      */
-    void delete(int id) {
+    void delete(String id) {
         int number = -1;
         for (int i = 0; i < quantity; i++) {
-            if (applications[i].getid() == id) {
+            if (applications[i].getId().equals(id)) {
                 applications[i] = null;
                 number = i;
             }
         }
         if (number > -1) {
             for (int j = number; j < quantity; j++) {
-                Application temporary = new Application();
-                temporary = applications[j];
+                Application temporary = applications[j];
                 applications[j] = applications[j + 1];
                 applications[j + 1] = temporary;
             }
             quantity--;
         }
-        else throw new NullPointerException("id is null");
+        else throw new NullPointerException();
     }
     /**
      * Поиск заявки по id.
-     * @param id заявки
-     * @return заявка с заданным id
+     * @param id заявки.
+     * @return номер в массиве заявки с заданным id.
      */
-        Application findById(int id) {
-            for(int i = 0; i < quantity; i++) {
-                 if (applications[i].getid() == id) return applications[i];
-            }
-            return null;
+       int getdById(String id) {
+           for(int i = 0; i < quantity; i++) {
+               if (applications[i].getId().equals(id)) return i;
+           }
+           return -1;
      }
+
+
     /**
      * Возвращает весь массив заявок.
      * @return массив заявок
      */
-    Application[] getAll() {
-         return applications;
+    Application[] getAllApplications() {
+        Application[] getApplication = new Application[quantity];
+        for(int i =0; i<quantity;i++)
+        getApplication[i]= applications[i];
+        return getApplication;
      }
 }
 

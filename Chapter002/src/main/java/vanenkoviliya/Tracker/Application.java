@@ -1,8 +1,6 @@
 package vanenkoviliya.Tracker;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author vanenkov_ia
@@ -10,41 +8,45 @@ import java.util.List;
  * @since 07.11.2016
  **/
 public class Application {
-    int id;
+    String id;
     String name;
     String description;
     Date date = new Date();
     Comment[] comments = new Comment[10];
-    int quantityofcomments = 0;
+    int quantityOfComments = 0;
     /**
      * Метод возвращает id заявки.
-     * @return id заявке
+     * @return id заявке.
      */
-     int getid() {
+    String getId() {
        return id;
     }
     /**
      * Метод присваивает id заявке.
-     * @param id новый id заявки
+     * @param id новый id заявки.
      */
-     void setid(int id) {
+     void setId(String id) {
         this.id=id;
     }
     /**
      * Метод добавляет комментарий к заявке заявке.
-     * @param text текст комментария
+     * @param text текст комментария.
      */
-    void addcomment(String text) {
-        comments[quantityofcomments]= new Comment();
-        comments[quantityofcomments].text = text;
-        quantityofcomments++;
+    void addComment(String text) {
+        comments[quantityOfComments]= new Comment();
+        comments[quantityOfComments].text = text;
+        comments[quantityOfComments].number = quantityOfComments+1;
+        quantityOfComments++;
     }
     /**
      * Метод возвращает массив комментариев.
      * @return массив комментариев
      */
-    Comment[] returncomments() {
-        return comments;
+    Comment[] getAllComments() {
+        Comment[] getComments = new Comment[quantityOfComments];
+        for(int i =0; i<quantityOfComments;i++)
+        getComments[i]= comments[i];
+        return getComments;
     }
 }
 
