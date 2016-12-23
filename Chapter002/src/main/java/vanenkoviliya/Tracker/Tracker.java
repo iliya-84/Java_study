@@ -30,16 +30,15 @@ public class Tracker {
         quantity++;
     }
     /**
-     * Редактирования заявки.
-     * @param id заявки.
+     * Редактирования заявки. Передает заявку, сформированную в меню в трекер. Присваивает ей комментарии старой заявки. Записывает новую заявку на место старой.
      * @param newApplication измененная заявка.
      */
-    void edit(String id, Application newApplication) {
-        newApplication.id = id;
-        newApplication.comments=applications[getdById(id)].comments;
-        newApplication.quantityOfComments=applications[getdById(id)].quantityOfComments;
-        applications[getdById(id)] = newApplication;
-    }
+    void edit(Application newApplication) {
+        newApplication.comments=getdApplicationById(newApplication.id).comments;
+        newApplication.quantityOfComments=getdApplicationById(newApplication.id).quantityOfComments;
+        applications[getdById(newApplication.id)] = newApplication;
+       }
+
     /**
      * Удаления заявки.
      * @param id id заявки.
@@ -73,7 +72,17 @@ public class Tracker {
            }
            return -1;
      }
-
+    /**
+     * Поиск заявки по id.
+     * @param id заявки.
+     * @return заявка с заданным id.
+     */
+    Application getdApplicationById(String id) {
+        for(int i = 0; i < quantity; i++) {
+            if (applications[i].getId().equals(id)) return applications[i];
+        }
+        return null;
+    }
 
     /**
      * Возвращает весь массив заявок.
@@ -86,7 +95,6 @@ public class Tracker {
         return getApplication;
      }
 }
-
 
 
 

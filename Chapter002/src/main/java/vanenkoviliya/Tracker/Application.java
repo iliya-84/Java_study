@@ -40,7 +40,7 @@ public class Application {
     }
     /**
      * Метод возвращает массив комментариев.
-     * @return массив комментариев
+     * @return массив комментариев.
      */
     Comment[] getAllComments() {
         Comment[] getComments = new Comment[quantityOfComments];
@@ -48,6 +48,48 @@ public class Application {
         getComments[i]= comments[i];
         return getComments;
     }
+    /**
+     * Переопределяю метод toString().
+     * @return поля заявки и комментарий.
+     */
+    @Override
+    public String toString()
+    {
+        String appToString;
+       appToString = "id:"+this.id+" Имя:"+this.name+" Описание:"+this.description+" Дата:"+this.date+" Комментарий:";
+        for (Comment comments : getAllComments()) {
+            appToString = appToString + comments.text;
+    }
+        return appToString;
+    }
+    /**
+     * Переопределяю метод equals().
+     * @return поля заявки и комментарий.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        Application other = (Application) obj;
+        if (id == other.id && name == other.name && description == other.description)
+            return true;
+        return false;
+    }
+    /**
+     * Переопределяю метод hashCode().
+     * @return поля заявки и комментарий.
+     */
+    @Override
+    public int hashCode() {
+        int code = 11;
+        int k = 7;
+        code = k*code + id.hashCode();
+        code = k*code + name.hashCode();
+        code = k*code + description.hashCode();
+        return code;
+    }
+
+
+
+
 }
 
 
