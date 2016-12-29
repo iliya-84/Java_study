@@ -7,5 +7,4 @@ package vanenkoviliya.Tracker;
  **/
 public class Comment {
     String text;
-    int number;
 }

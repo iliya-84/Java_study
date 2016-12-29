@@ -9,77 +9,66 @@ import java.util.Random;
  **/
 public class Tracker {
     Application[] applications = new Application[100];
-    int quantity =0; // Количество заявок в трекере.
+
     /**
-     * Добавление заявки. Заявке случайным образом присваиваится id. Также происходит проверка на совпадение с уже существующими id.
+     * Добавление заявки,реданной из трекера.
+     *
      * @param newapplication заявка для добавления.
      */
-    void add(Application newapplication){
-        Random random = new Random();
-        String randomId="0";
-        boolean repeatId = false;
-        applications[quantity]=newapplication;
-        while(repeatId == false) {
-          repeatId = true;
-          randomId = Integer.toString(random.nextInt(1000));
-          for(int i=0;i<quantity;i++){
-             if (randomId == applications[i].id) repeatId = false;
+    void add(Application newapplication) {
+        for (int i = 0; i < this.applications.length; i++) {
+            if (this.applications[i] == null) {
+                this.applications[i] = newapplication;
+                break;
+            }
         }
+
     }
-        applications[quantity].id = randomId;
-        quantity++;
-    }
+
     /**
      * Редактирования заявки. Передает заявку, сформированную в меню в трекер. Присваивает ей комментарии старой заявки. Записывает новую заявку на место старой.
+     *
      * @param newApplication измененная заявка.
      */
     void edit(Application newApplication) {
-        newApplication.comments=getdApplicationById(newApplication.id).comments;
-        newApplication.quantityOfComments=getdApplicationById(newApplication.id).quantityOfComments;
+        newApplication.comments = getdApplicationById(newApplication.id).comments;
         applications[getdById(newApplication.id)] = newApplication;
-       }
+    }
 
     /**
      * Удаления заявки.
+     *
      * @param id id заявки.
      */
     void delete(String id) {
-        int number = -1;
-        for (int i = 0; i < quantity; i++) {
-            if (applications[i].getId().equals(id)) {
+        for (int i = 0; i < this.applications.length; i++) {
+            if (applications[i] != null && applications[i].getId().equals(id)) {
                 applications[i] = null;
-                number = i;
             }
         }
-        if (number > -1) {
-            for (int j = number; j < quantity; j++) {
-                Application temporary = applications[j];
-                applications[j] = applications[j + 1];
-                applications[j + 1] = temporary;
-            }
-            quantity--;
-        }
-        else throw new NullPointerException();
     }
+
     /**
      * Поиск заявки по id.
      * @param id заявки.
      * @return номер в массиве заявки с заданным id.
      */
-       int getdById(String id) {
-           for(int i = 0; i < quantity; i++) {
-               if (applications[i].getId().equals(id)) return i;
-           }
-           return -1;
-     }
+    int getdById(String id) {
+        for (int i=0; i< applications.length; i++) {
+            if (applications[i] != null && applications[i].id.equals(id)) return i;
+        }
+        return -1;
+    }
+
     /**
      * Поиск заявки по id.
+     *
      * @param id заявки.
      * @return заявка с заданным id.
      */
     Application getdApplicationById(String id) {
-        for(int i = 0; i < quantity; i++) {
-            if (applications[i].getId().equals(id)) return applications[i];
+        for (Application application : this.applications) {
+            if (application != null && application.getId().equals(id)) return application;
         }
         return null;
     }
@@ -89,12 +78,56 @@ public class Tracker {
      * @return массив заявок
      */
     Application[] getAllApplications() {
-        Application[] getApplication = new Application[quantity];
-        for(int i =0; i<quantity;i++)
-        getApplication[i]= applications[i];
-        return getApplication;
-     }
-}
+        Application[] getApplications = new Application[this.applications.length];
+        int i = 0;
+        for (Application application : this.applications) {
+            getApplications[i] = application;
+            i++;
+        }
+        return getApplications;
+    }
 
+    /**
+     * Возвращает весь массив заявок по фильтру.
+     * @param searchString строка для поиска в трекере.
+     * @param pozition поле для поиска в трекере 1 - по имени, 2 -  по описанию.
+     * @return массив заявок, удовлетворяющих параметрам поиска.
+     */
+    Application[] getApplicationsByFiltr(String searchString, String pozition) {
+        Application[] getApplications = new Application[this.applications.length];
+        int i = 0;
+        if (pozition.equals("1")) {
+            for (Application application : this.applications) {
+                if (application != null && containsSubstring(application.name, searchString) == true)
+                    getApplications[i] = application;
+                i++;
+            }
+        }
+        if (pozition.equals("2")) {
+            for (Application application : this.applications) {
+                if (application != null && containsSubstring(application.description, searchString) == true)
+                    getApplications[i] = application;
+                i++;
+            }
+        }
+        return getApplications;
+    }
+
+    /**
+     * Проверка содержания подстроки в строке.
+     * @param origin строка.
+     * @param sub подстрока.
+     * @return true если одстрока в строке содержится, false если не содержится.
+     */
+    boolean containsSubstring(String origin, String sub) {
+        boolean answer;
+        if(origin.indexOf(sub) != -1) answer = true;
+        else answer = false;
+        return answer;
+    }
+
+
+
+}
 
 

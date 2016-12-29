@@ -34,16 +34,17 @@ public class UITest {
         assertThat(testTracker.applications[0].name, is("newName"));
     }
    @Test
-    public void whenDeleteChangeNameOfApplication()   {
+    public void whenDeleteDisappearOfApplication()   {
        String[] myAnswers1 = new String[]{"1","testName1","testDescription1","testComment1"};
        Tracker testTracker = new Tracker();
        Input input1 = new StubInput(myAnswers1);
        StartUi testStartUi1 = new StartUi(input1, testTracker);
        testStartUi1.init();
+       String newid = testTracker.applications[0].id;
        String[] myAnswers2 = new String[]{"3",testTracker.applications[0].id};
        Input input2 = new StubInput(myAnswers2);
        StartUi testStartUi2 = new StartUi(input2, testTracker);
        testStartUi2.init();
-       assertThat(testTracker.quantity, is(0));
+       assertThat(testTracker.getdById(newid), is(-1));
     }
 }

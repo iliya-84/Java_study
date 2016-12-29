@@ -7,14 +7,15 @@ package vanenkoviliya.Tracker;
 public class StartUi {
     private Input input;
     private Tracker tracker;
-
     public  static boolean breakLoop = false; // Остановка основного цикла программы.
+
     public static void main(String[] args)  {
         Tracker tracker = new Tracker();
-        Input input = new ConsoleInput();
+        Input input = new ValidateInput();
         StartUi startUi = new StartUi(input, tracker);
         startUi.init();
      }
+
     /**
      * Конструктор. Присваивает полям класса введенных значений input и tracker.
      * @param input ввод данных.
@@ -32,17 +33,9 @@ public class StartUi {
         menu.fillActions();
         do {
             menu.showMenu();
-            try {
-                int key = Integer.valueOf(input.ask("*Выберите действие: "));
-                menu.select(key);
-            }
-           catch(Exception e) {
-               System.out.println("*Неверный ввод.");
-           }
+            menu.select(input.ask("*Выберите действие: ", menu.getKeys()));
         } while (breakLoop == false);
   }
-
-
 }
 
 

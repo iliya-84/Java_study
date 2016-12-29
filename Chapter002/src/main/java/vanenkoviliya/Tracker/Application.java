@@ -13,7 +13,7 @@ public class Application {
     String description;
     Date date = new Date();
     Comment[] comments = new Comment[10];
-    int quantityOfComments = 0;
+
     /**
      * Метод возвращает id заявки.
      * @return id заявке.
@@ -33,19 +33,25 @@ public class Application {
      * @param text текст комментария.
      */
     void addComment(String text) {
-        comments[quantityOfComments]= new Comment();
-        comments[quantityOfComments].text = text;
-        comments[quantityOfComments].number = quantityOfComments+1;
-        quantityOfComments++;
+        for (int i = 0; i < comments.length; i++) {
+            if (comments[i] == null) {
+                comments[i] = new Comment();
+                comments[i].text = text;
+                break;
+            }
+        }
     }
     /**
      * Метод возвращает массив комментариев.
      * @return массив комментариев.
      */
     Comment[] getAllComments() {
-        Comment[] getComments = new Comment[quantityOfComments];
-        for(int i =0; i<quantityOfComments;i++)
-        getComments[i]= comments[i];
+        Comment[] getComments = new Comment[comments.length];
+            int i=0;
+        for(Comment comment : comments) {
+            getComments[i]= comment;
+            i++;
+        }
         return getComments;
     }
     /**
@@ -55,10 +61,11 @@ public class Application {
     @Override
     public String toString()
     {
-        String appToString;
-       appToString = "id:"+this.id+" Имя:"+this.name+" Описание:"+this.description+" Дата:"+this.date+" Комментарий:";
-        for (Comment comments : getAllComments()) {
-            appToString = appToString + comments.text;
+        String appToString = "id:"+this.id+" Имя:"+this.name+" Описание:"+this.description+" Дата:"+this.date;
+        for (Comment comment : getAllComments()) {
+            if (comment != null) {
+                appToString = appToString  + " Комментарий:"+comment.text;
+            }
     }
         return appToString;
     }
@@ -86,10 +93,6 @@ public class Application {
         code = k*code + description.hashCode();
         return code;
     }
-
-
-
-
 }
 
 

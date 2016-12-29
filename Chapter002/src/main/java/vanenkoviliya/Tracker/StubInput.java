@@ -24,4 +24,21 @@ public class StubInput implements Input {
         }
         else return "6";
     }
- }
+
+    public int ask(String question, int[] range)  {
+        int key = Integer.valueOf(this.ask(question));
+        boolean exist = false;
+        for (int value : range) {
+            if (value == key && key != 0) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) {
+            return key;
+        } else {
+            throw new MenuOutException("*В меню нет такого пункта.");
+        }
+    }
+
+}

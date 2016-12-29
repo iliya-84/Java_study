@@ -1,5 +1,7 @@
 package vanenkoviliya.Tracker;
 
+import java.util.Random;
+
 /**
  * @author ИЛЬЯ
  * @version 1
@@ -11,6 +13,7 @@ public class MenuTracker {
     private Tracker tracker;
     private UserAction[] actions = new UserAction[7];
     private int[] keys = new int[this.actions.length];
+
 
     /**
      * Конструктор. Присваивает полям класса введенных значений input и tracker.
@@ -45,6 +48,21 @@ public class MenuTracker {
             }
         }
     }
+
+    /**
+     * Возвращает массив ключей, которые допустимы для ввода в меню.
+     * @return - массив ключей.
+     */
+    public int[] getKeys() {
+        for (int i = 0; i < this.actions.length; i++) {
+            if (actions[i] != null) {
+                keys[i] = this.actions[i].key();
+            }
+        }
+        return this.keys;
+    }
+
+
     /**
      * Запуск выбранного действия меню.
      * @param key - номер действия.
@@ -53,7 +71,7 @@ public class MenuTracker {
         this.actions[key].execute(this.input, this.tracker);
     }
     /**
-     * Создает новую заявку, присваивает значения полям, создает комментарий, передает заявку в трекер в медод add().
+     * Создает новую заявку, присваивает значения полям, создает комментарий. Заявке случайным образом присваиваится id. Также происходит проверка на совпадение с уже существующими id. Передает заявку в трекер в медод add().
      */
     private class AddApplication implements UserAction {
         /**
@@ -71,7 +89,19 @@ public class MenuTracker {
          */
         @Override
         public void execute(Input input, Tracker tracker) {
+            Random random = new Random();
+            boolean repeatId = false;
+            String randomId = "0";
             Application newapplication = new Application();
+
+            while (repeatId == false) {
+                repeatId = true;
+                randomId = Integer.toString(random.nextInt(1000));
+                for (Application applications : tracker.getAllApplications()) {
+                    if (applications != null && randomId == applications.id) repeatId = false;
+                }
+            }
+            newapplication.id = randomId;
             newapplication.name = input.ask("*Ведите имя:");
             newapplication.description = input.ask("*Ведите описание:");
             String comment = input.ask("*Ведите комментарий:");
@@ -92,7 +122,7 @@ public class MenuTracker {
     }
 
     /**
-     * Редактирование заявки. Моздает новую заявку и передает в трекер в медод edit() для замены.
+     * Редактирование заявки. Создает новую заявку и передает в трекер в медод edit() для замены.
      **/
     private class EditApplication implements UserAction {
         /**
@@ -111,14 +141,14 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("*Выберите id заявки для редактирования:");
-            System.out.println(tracker.getdApplicationById(id).toString());
-            Application newApplication = new Application();
-            newApplication.id = id;
-            newApplication.name = input.ask("*Введите новое имя:");
-            newApplication.description = input.ask("*Введите новое описание:");
-            tracker.edit(newApplication);
-            System.out.println("*Заявка id" + id + " изменена.");
-
+            if(tracker.getdApplicationById(id)!= null) {
+                Application newApplication = new Application();
+                newApplication.id = id;
+                newApplication.name = input.ask("*Введите новое имя:");
+                newApplication.description = input.ask("*Введите новое описание:");
+                tracker.edit(newApplication);
+                System.out.println("*Заявка id" + id + " изменена.");
+            } else  System.out.println("*Заявки с данны id не существует.");
         }
         /**
          * Сообщает, что делает данный метод
@@ -148,13 +178,12 @@ public class MenuTracker {
          */
         @Override
         public void execute(Input input, Tracker tracker) {
-            try {
+
                 String deleteid = input.ask("*Выберите id заявки для удаления:");
+                if(tracker.getdApplicationById(deleteid)!= null) {
                 tracker.delete(deleteid);
                 System.out.println("*Заявка id" + deleteid + " удалена.");
-            } catch (NullPointerException e) {
-                System.out.println("*Заявка с данным id не существует.");
-            }
+                } else  System.out.println("*Заявки с данны id не существует.");
         }
         /**
          * Сообщает, что делает данный метод
@@ -185,10 +214,15 @@ public class MenuTracker {
          */
         @Override
         public void execute(Input input, Tracker tracker) {
+            int quantityFind = 0;
             for (Application applications : tracker.getAllApplications()) {
-                System.out.println(applications.toString());
+                if(applications != null) {
+                    System.out.println(applications.toString());
+                    quantityFind++;
+                }
             }
-
+            if (quantityFind == 0)
+                System.out.println("*Нет заявок.");
         }
         /**
          * Сообщает, что делает данный метод
@@ -218,27 +252,24 @@ public class MenuTracker {
          */
         @Override
         public void execute(Input input, Tracker tracker) {
-            String read = input.ask("*Для вывода списка по имени нажмите 1\n*Для вывода списка по описанию 2");
-            if (read.equals("1")) {
-                String searchname;
-                searchname = input.ask("*Введите имя для поиска");
-                for (Application applications : tracker.getAllApplications()) {
-                    if (containsSubstring(applications.name, searchname) == true)
-                        System.out.println(applications.toString());
+            String pozition = input.ask("*Для вывода списка по имени нажмите 1\n*Для вывода списка по описанию 2:");
+            String searchString = null;
+            int quantityFind = 0;
+            if (pozition.equals("1")) {
+                searchString = input.ask("*Введите имя для поиска:");
+            } else if (pozition.equals("2")) {
+                searchString = input.ask("*Введите описание для поиска:");
+            } else System.out.println("*Неверный ввод");
+            for (Application application : tracker.getApplicationsByFiltr(searchString, pozition)) {
+                if (application != null) {
+                    System.out.println(application.toString());
+                    quantityFind++;
                 }
             }
-            else if (read.equals("2")) {
+            if (quantityFind == 0 && (pozition.equals("1") || pozition.equals("2")))
+                System.out.println("*Нет заявок по вашему запросу.");
 
-                String searchdate;
-                searchdate = input.ask("*Введите описание для поиска");
-                for (Application applications : tracker.getAllApplications()) {
-                    if (containsSubstring(applications.description, searchdate)== true)
-                        System.out.println(applications.toString());
-                }
-            }
-            else System.out.println("*Неверный ввод");
-            }
-
+        }
         /**
          * Сообщает, что делает данный метод
          * @return описание метода.
@@ -280,18 +311,6 @@ public class MenuTracker {
         }
     }
 
-    /**
-     * Проверка содержания подстроки в строке.
-     * @param origin строка.
-     * @param sub подстрока.
-     * @return true если одстрока в строке содержится, false если не содержится.
-     */
-    boolean containsSubstring(String origin, String sub) {
-        boolean answer;
-        if(origin.indexOf(sub) != -1) answer = true;
-        else answer = false;
-        return answer;
-    }
 
 
 
