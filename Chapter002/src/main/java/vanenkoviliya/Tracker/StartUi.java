@@ -31,6 +31,10 @@ public class StartUi {
         System.out.println("Программа учета заявок\nПозволяет хранить и редактировать заявки\nРазработал Ваненков Илья\nМосква 2016 год.");
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         menu.fillActions();
+
+
+
+
         do {
             menu.showMenu();
             menu.select(input.ask("*Выберите действие: ", menu.getKeys()));
