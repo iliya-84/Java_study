@@ -1,4 +1,4 @@
-package vanenkoviliya.Tracker;
+﻿package vanenkoviliya.Tracker;
 
 /**
  * @author ИЛЬЯ
@@ -13,10 +13,7 @@ public class ValidateInput extends ConsoleInput {
      * @param range массив допустимых ключей.
      * @return ответ пользователя при совпадении ответа с допустимыми ключами. Возвращает -1, если ответ не совпадает с допустимыми ключами.
      * */
-<<<<<<< 495343dd80f4930fe6f7d2ed7685ee4b42069531
-=======
     @Override
->>>>>>> 5578114f9fe906bc2b8c192d9d1b8b20977a1c8d
     public int ask(String question, int[] range) {
        boolean invalid = true;
         int value = -1;
