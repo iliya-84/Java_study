@@ -41,7 +41,7 @@
        		             <manifest>
                 	        <addClasspath>true</addClasspath>
                         	<mainClass>vanenkoviliya.Tracker.StartUi</mainClass>
-                        	<packageName>vanenkoviliya.Tracke</packageName>
+                        	<packageName>vanenkoviliya.Tracker</packageName>
                        		<addClasspath>true</addClasspath>
               		        <classpathPrefix>lib/</classpathPrefix>
                              </manifest>
